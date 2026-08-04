@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
@@ -11,6 +11,11 @@ export class UserController {
         private readonly userService: UserService
     ) {}
 
+    @Get()
+    async getAllUser(){
+        return await this.userService.findAll();
+    }
+    
     @Get(':id')
     async getUser(@Param('id') id: string){
         return await this.userService.getUser(id);
@@ -60,5 +65,33 @@ export class UserController {
         avatarUrl: updatedUser.avatarUrl,
         user: updatedUser,
         };
+    }
+
+    @Patch('post')
+    async updatePost(@Body() body:{userId: string, postNumber: number}){
+        // Ensure values are not undefined
+        if (!body || body.postNumber === undefined) {
+        throw new BadRequestException('postNumber is required');
+        }
+
+        return await this.userService.updateThePost(body.userId, body.postNumber);
+    }
+
+    @Patch('follower')
+    async updateFollowers(@Body() body:{userId: string, followerNumber: number}){
+        if (!body || body.followerNumber === undefined) {
+            throw new BadRequestException('Follower number must be a valid number');
+        }
+
+        return await this.userService.updateFollower(body.userId, body.followerNumber);
+    }
+    
+    @Patch('following')
+    async updateFollowing(@Body() body:{userId: string, followingNumber: number}){
+        if (!body || body.followingNumber === undefined) {
+            throw new BadRequestException('Follower number must be a valid number');
+        }
+
+        return await this.userService.updateFollowing(body.userId, body.followingNumber);
     }
 }

@@ -45,7 +45,7 @@ export class LoginandregistrationPage implements OnInit {
         next: (user) => {
           alert(`Welcome back, ${user.username}!`);
           localStorage.setItem('userId', JSON.stringify(user._id));
-          this.router.navigate(['/home']);
+          this.router.navigate(['/profile']);
         },
         error: (err) => {
           alert('Invalid username and password');
@@ -68,7 +68,7 @@ export class LoginandregistrationPage implements OnInit {
           alert('Account created successfully! Please Upload your profile picture.');
           localStorage.setItem('uploadPro', JSON.stringify(user._id));
           
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/upload-avatar']);
           this.toggleAuthMode();
         },
         error: (err) => {

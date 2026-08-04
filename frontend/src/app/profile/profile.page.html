@@ -1,57 +1,89 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="end">
-      <ion-button (click)="skipForNow()">Skip</ion-button>
-    </ion-buttons>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-button class="icon-class" shape="round" size="small" fill="clear" >
+        <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button class="toggleAccount" shape="round" fill="clear" >
+        <span>{{user?.username}}</span>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+      <ion-button class="icon-class" shape="round" size="small" fill="clear">
+        <ion-icon name="menu-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding ion-text-center">
+<ion-content [fullscreen]="true">
+  <!-- Pull to Refresh Component -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content 
+      pullingIcon="chevron-down-circle-outline" 
+      pullingText="Pull down to refresh" 
+      refreshingSpinner="circles" 
+      refreshingText="Fetching profile...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="container">
+    <div class="profileDetails">
+      <div class="profile-avatar">
+        <ion-avatar>
+          <ion-img [src]="getUserAvatar()" alt="User"></ion-img>
+        </ion-avatar>
+      </div>
+      <div class="profile-content">
+        <p>{{user?.fullname}}</p>
+        <div class="follow-list">
+          <div class="list">
+            <p>{{user?.postNumber}}</p>
+            <p>posts</p>
+          </div>
+          <div class="list">
+            <p>{{user?.followerNumber}}</p>
+            <p>followers</p>
+          </div>
+          <div class="list">
+            <p>{{user?.followingNumber}}</p>
+            <p>following</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- AVATAR / PREVIEW CONTAINER -->
-  <div class="avatar-container">
-    <!-- Show Preview if photo is captured, otherwise show Current Saved Avatar -->
-    <ion-avatar class="main-avatar">
-      <img [src]="previewPath ? previewPath : 'assets/images/default-avatar.png'"  alt="Avatar" />
-    </ion-avatar>
-
-    <!-- Small camera icon button to trigger selection -->
-    <ion-button 
-      *ngIf="!previewPath" 
-      fill="clear" 
-      size="small" 
-      class="camera-btn" 
-      (click)="selectSource()">
-      <ion-icon name="camera" slot="icon-only"></ion-icon>
-    </ion-button>
+    <div class="profileBio">
+      <ion-button (click)="updatePost()">
+        Update Post
+      </ion-button>
+      
+      <ion-button (click)="updateFollower()">
+        Update Follower
+      </ion-button>
+      
+      <ion-button (click)="followingBtn()">
+        Update Following
+      </ion-button>
+    </div>
   </div>
-
-  <!-- STATE A: Normal view before picking an image -->
-  <div *ngIf="!previewPath" class="ion-margin-top">
-    <ion-button expand="block" fill="outline" (click)="selectSource()">
-      <ion-icon name="image-outline" slot="start"></ion-icon>
-      Change Profile Picture
-    </ion-button>
-  </div>
-
-  <!-- STATE B: Preview view after capturing image -->
-  <div *ngIf="previewPath" class="preview-actions ion-margin-top">
-    <ion-text color="primary">
-      <h3>Preview New Avatar</h3>
-    </ion-text>
-
-    <ion-row>
-      <ion-col size="6">
-          <ion-icon name="close-outline" slot="start"></ion-icon>
-          Cancel
-      </ion-col>
-      <ion-col size="6">
-        <ion-button expand="block" color="success" (click)="updateAvatar()">
-          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-          Save Avatar
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </div>
-
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button>
+          <ion-icon name="home-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button>
+          <ion-icon name="musical-notes-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button>
+          <ion-icon name="paper-plane-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button>
+          <ion-icon name="search-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button>
+          <ion-avatar class="person">
+            <ion-img [src]="getUserAvatar()" alt="User Avatar"></ion-img>
+          </ion-avatar>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

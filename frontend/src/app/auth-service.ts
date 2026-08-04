@@ -43,6 +43,7 @@ export class AuthService {
       tap((user)=>
       {
         this.currentUser.set(user);
+        localStorage.setItem('userID', JSON.stringify(user._id));
       })
     );
   }

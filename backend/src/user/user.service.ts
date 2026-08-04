@@ -68,6 +68,11 @@ export class UserService {
         return this.userModel.findById(id).exec();
     }
 
+    async findAll()
+    {
+        return await this.userModel.find();
+    }
+
     async updateAvatar(userId: string, imagePath: string) {
         const updatedUser = await this.userModel.findByIdAndUpdate(
             userId, 
@@ -80,5 +85,17 @@ export class UserService {
         }
 
         return updatedUser;
+    }
+
+    async updateThePost(userId:string, postNumber: number){
+        return await this.userModel.findByIdAndUpdate(userId, {postNumber:postNumber});
+    }
+
+    async updateFollower(userId:string, follow: number){
+        return await this.userModel.findByIdAndUpdate(userId, {followerNumber:follow});
+    }
+
+    async updateFollowing(userId:string, following: number){
+        return await this.userModel.findByIdAndUpdate(userId, {followingNumber:following});
     }
 }

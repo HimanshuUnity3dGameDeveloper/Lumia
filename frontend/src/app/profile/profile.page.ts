@@ -3,9 +3,25 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController } from '@ionic/angular';
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonIcon, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonIcon, IonImg, 
+  IonRefresher, IonRefresherContent, IonRow, IonTabBar, IonTabButton, IonTabs, IonText, 
+  IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { addIcons } from 'ionicons';
+import { addOutline, chevronForwardOutline, homeOutline, menuOutline, musicalNotesOutline, paperPlaneOutline, 
+  searchOutline } from 'ionicons/icons';
+
+interface UserProfile {
+  _id: string;
+  fullname: string;
+  username: string;
+  avatarUrl?: string;
+  postNumber: number;
+  followerNumber: number;
+  followingNumber: number;
+  profileBio: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -13,104 +29,148 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, 
-    IonIcon, IonCol, IonRow, IonText, IonAvatar]
+    IonIcon, IonCol, IonRow, IonText, IonAvatar, IonImg, IonRefresher, IonRefresherContent, IonTabs, 
+    IonTabBar, IonTabButton]
 })
 export class ProfilePage implements OnInit {
 
-  @Input() userId: string = ''; // Passed in via route parameter or state
-  selectedFile: File | null = null;
-  previewPath: string | null = null;
+  @Input() userId: string ='';
+  post: number = 0;
+  follower: number = 0;
+  following: number = 0;
 
-  private readonly API_URL = 'http://localhost:3000/user';
+  isFollowing: boolean = false;
+  user: UserProfile | null = null;
+
+  private readonly API_URL = 'http://localhost:3000';
 
   constructor(
     private http: HttpClient,
     private actionSheetCtrl: ActionSheetController,
     private router: Router
-  ) { }
+  ) { 
+    addIcons({chevronForwardOutline, menuOutline, addOutline ,searchOutline, paperPlaneOutline, 
+      musicalNotesOutline, homeOutline})
+  
+  }
 
   ngOnInit() {
-    
-    if (!this.userId) {
-      const rawId = localStorage.getItem('uploadPro') || '';
-      this.userId = JSON.parse(rawId);
-      console.log(this.userId);
-    }
+    this.loadUserProfile();
   }
   
-  // 1. SELECT THE FILE
-  async selectSource() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Select Avatar Source',
-      buttons: [
-        {
-          text: 'Take Photo',
-          icon: 'camera',
-          handler: () => this.captureImage(CameraSource.Camera),
+  loadUserProfile(event?: any){
+    
+    const rawId = localStorage.getItem('userID');
+    const userId = rawId ? JSON.parse(rawId) : null;
+
+    this.http.get<UserProfile>(`${this.API_URL}/user/${userId}`).subscribe(
+      {
+        next: (userData) => {
+          this.user = userData;
+          this.userId = userData._id;
+          this.post = userData.postNumber;
+          this.follower = userData.followerNumber;
+          this.following = userData.followingNumber;
+
+          // Hide spinner if triggered by pull-to-refresh
+        if (event) {
+          event.target.complete();
+        }
+          
         },
-        {
-          text: 'Choose from Gallery',
-          icon: 'image',
-          handler: () => this.captureImage(CameraSource.Photos),
+        error: (err) => {
+          console.error('Failed to load user profile:', err);
+        
+          // Hide spinner if triggered by pull-to-refresh
+          if (event) {
+            event.target.complete();
+          }
         },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-        },
-      ],
-    });
-    await actionSheet.present();
-  }
-
-  async captureImage(source: CameraSource){
-    try{
-
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri,
-        source: source // Opens gallery instead of camera
-      });
-
-      if(image.webPath){
-        this.previewPath = image.webPath;
-
-        const res = (await fetch(image.webPath));
-        const resBlob = await res.blob();
-        const resFile = new File([resBlob],'avatar.jpg', { type: resBlob.type })
-
-        this.selectedFile = resFile;
       }
-    } catch (error) {
-      // Handles permission denied, device unsupported, or runtime errors
-      console.error('Failed to pick image from gallery:', error);
+    );
+  }
+  
+  handleRefresh(event: any){
+    this.loadUserProfile(event);
+  }
+
+  // 1. GET AVATAR...
+  getUserAvatar(): string{
+    if(this.user?.avatarUrl)
+    {
+      return `${this.API_URL}${this.user.avatarUrl}`;
     }
+    // Default placeholder fallback
+    return 'assets/images/default-avatar.png';
   }
 
-  updateAvatar(){
-    if (!this.selectedFile) return;
-    this.uploadUserAvatar(this.userId, this.selectedFile);
-  }
+  // 2. UPDATE POST..
+  updatePost(){    
+    this.post++;
+    const payload = {userId: this.userId, postNumber: Number(this.post)};
 
-  uploadUserAvatar(userId: string, file: File) {
-    const formData = new FormData();
-    formData.append('avatar', file, file.name);
-
-    this.http.post(`${this.API_URL}/${userId}/avatar`, formData).subscribe(
-      { next: (res: any) => {
-          console.log('Uploaded successfully!', res);
-          // Optional: Clear selection after success
-          this.selectedFile = null;
-          this.router.navigate(['/login']);
+    this.http.patch<{postNumber: number}>(`${this.API_URL}/user/post`,payload).subscribe(
+      {
+        next:(response) => {
+          console.log('Successfully updated on server:', response);
         },
         error: (err) => console.error('Upload failed:', err)
-      });
+      }
+    )
   }
 
-  skipForNow(){
-    //avatarUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+  // 3. UPDATE FOLLOWER..
+  updateFollower(){
+    
+    // Fallback to 0 if database returns null/undefined, then increment
+    this.follower = (Number(this.follower) || 0) + 1;
 
-    this.router.navigate(['/login']);
+    const payload = {userId: this.userId, followerNumber: this.follower};
 
+    this.http.patch<{followerNumber: number}>(`${this.API_URL}/user/follower`, payload).subscribe(
+      {
+        next:(response) => {
+          console.log('Successfully updated on server:', response);
+        },
+        error: (err) => console.error('Upload failed:', err)
+      }
+    )
+  }
+
+  // 4. UPDATE FOLLOWING..
+  updateFollowing(){
+    
+    // Fallback to 0 if database returns null/undefined, then increment
+    //this.following = (Number(this.following) || 0) + 1;
+
+    const payload = {userId: this.userId, followingNumber: this.following};
+
+    this.http.patch<{followingNumber: number}>(`${this.API_URL}/user/following`, payload).subscribe(
+      {
+        next:(response) => {
+          console.log('Successfully updated on server:', response);
+        },
+        error: (err) => console.error('Upload failed:', err)
+      }
+    )
+  }
+
+  // 5. FOLLOWING PEOPLES
+  followingBtn(){
+    this.isFollowing = !this.isFollowing;
+    console.log(this.isFollowing);
+    this.updateFollowingList();
+  }
+  updateFollowingList()
+  {
+    if(this.isFollowing){
+      this.following = (Number(this.following) || 0) + 1;
+      this.updateFollowing();
+    }
+    else
+    {      
+      this.following = (Number(this.following) || 0) - 1;
+      this.updateFollowing();
+    }
   }
 }
