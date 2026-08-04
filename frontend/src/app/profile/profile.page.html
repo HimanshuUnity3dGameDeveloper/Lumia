@@ -1,0 +1,57 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="skipForNow()">Skip</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+
+  <!-- AVATAR / PREVIEW CONTAINER -->
+  <div class="avatar-container">
+    <!-- Show Preview if photo is captured, otherwise show Current Saved Avatar -->
+    <ion-avatar class="main-avatar">
+      <img [src]="previewPath ? previewPath : 'assets/images/default-avatar.png'"  alt="Avatar" />
+    </ion-avatar>
+
+    <!-- Small camera icon button to trigger selection -->
+    <ion-button 
+      *ngIf="!previewPath" 
+      fill="clear" 
+      size="small" 
+      class="camera-btn" 
+      (click)="selectSource()">
+      <ion-icon name="camera" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- STATE A: Normal view before picking an image -->
+  <div *ngIf="!previewPath" class="ion-margin-top">
+    <ion-button expand="block" fill="outline" (click)="selectSource()">
+      <ion-icon name="image-outline" slot="start"></ion-icon>
+      Change Profile Picture
+    </ion-button>
+  </div>
+
+  <!-- STATE B: Preview view after capturing image -->
+  <div *ngIf="previewPath" class="preview-actions ion-margin-top">
+    <ion-text color="primary">
+      <h3>Preview New Avatar</h3>
+    </ion-text>
+
+    <ion-row>
+      <ion-col size="6">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Cancel
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="success" (click)="updateAvatar()">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          Save Avatar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+</ion-content>

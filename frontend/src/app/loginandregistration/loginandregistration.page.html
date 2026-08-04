@@ -1,0 +1,149 @@
+<ion-content>
+  <div class="container">
+    <div class="auth-container" [class.show-register]="!isLogin">
+      
+      <!-- ============== LOGO TITLE ============ -->
+      <div class="logoTitle">
+        <img src="assets/icon/Logo.png" alt="App Logo" width="100px"/>
+        <h2>Social Circle</h2>
+      </div>
+
+      <!-- ============== LOGIN FORM ============ -->
+      <form #loginForm="ngForm" (ngSubmit)="loginHandler(loginForm)" [style.display]="isLogin ? 'flex' : 'none'">
+        <div class="mainForm">
+          <div class="content">
+            <div class="field-set">
+              <ion-label>Username or Email</ion-label>
+              <ion-item lines="none">
+                <ion-icon slot="start" name="person"></ion-icon>
+                <ion-input name="identity" #identity="ngModel" [(ngModel)]="loginPortal.identity" placeholder="Enter your username or email" required minlength="5"></ion-input>
+              </ion-item>
+              <div class="msg">
+                @if (identity.touched && identity.errors) {
+                  <div class="error-msg">
+                    @if (identity.errors['required']) { <span>identity is required.</span> }
+                    @if (identity.errors['minlength']) { <span>Must be of 5 Character.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+
+            
+            <div class="field-set">
+              <ion-label>Password</ion-label>
+              <ion-item lines="none">
+                <ion-icon slot="start" name="lock-closed"></ion-icon>
+                <ion-input name="password" #password="ngModel" [(ngModel)]="loginPortal.password" placeholder="Enter your password" required minlength="8"></ion-input>
+              </ion-item> 
+              <div class="msg">
+                @if (password.touched && password.errors) {
+                  <div class="error-msg">
+                    @if (password.errors['required']) { <span>password is required.</span> }
+                    @if (password.errors['minlength']) { <span>Must be of 8 Character.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <ion-button type="submit" shape="round" fill="clear" [disabled]="loginForm.invalid">Log In</ion-button>
+            <br>
+            <div class="continue-with">
+              <P>------------ OR CONTINUE WITH ------------</P>
+              <div class="FB-Phone">
+                <ion-button class="fb" shape="round" fill="clear" (click)="continueWithFB()">FB Login</ion-button>
+                <ion-button class="phone" shape="round" fill="clear" (click)="continueWithPhone()">Phone Login</ion-button>
+              </div>
+            </div>
+          </div>
+        </div>  
+        <p class="signup-prompt">
+          New to network?  
+          <span>
+            <a (click)="toggleAuthMode()" style="cursor: pointer;">Create an account</a>
+          </span>
+        </p>
+      </form>
+
+      <!-- ============== REGISTRATION FORM ============ -->
+      <form #registerForm="ngForm" (ngSubmit)="registrationHandler(registerForm)" [style.display]="!isLogin ? 'flex' : 'none'">
+        <div class="mainForm">
+          <div class="content">
+            <div class="field-set">
+              <ion-label>Full Name</ion-label>
+              <ion-item lines="none">
+                <ion-icon slot="start" name="person"></ion-icon>
+                <ion-input name="fullname" #fullname="ngModel" placeholder="Enter Full name" [(ngModel)]="register.fullName" required minlength="8"></ion-input>
+              </ion-item>
+              <div class="msg">
+                @if (fullname.touched && fullname.errors) {
+                  <div class="error-msg">
+                    @if (fullname.errors['required']) { <span>fullname is required.</span> }
+                    @if (fullname.errors['minlength']) { <span>Must be of 8 Character.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+            
+            
+            <div class="field-set">
+              <ion-label>Email</ion-label>
+              <ion-item class="textFeild" lines="none">
+                <ion-icon slot="start" name="mail"></ion-icon>
+                <ion-input name="email" #email="ngModel" placeholder="Enter your Email" [(ngModel)]="register.email" required email></ion-input>
+              </ion-item>
+              <div class="msg">
+                @if (email.touched && email.errors) {
+                  <div class="error-msg">
+                    @if (email.errors['required']) { <span>email is required.</span> }
+                    @if (email.errors['email']) { <span>Please enter a valid email address.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+            
+            <div class="field-set">
+              <ion-label>User Name</ion-label>
+              <ion-item class="textFeild" lines="none">
+                <ion-icon slot="start" name="person-circle"></ion-icon>
+                <ion-input name="username" #username="ngModel" placeholder="Enter username" [(ngModel)]="register.username" required minlength="5"></ion-input>
+              </ion-item>
+              <div class="msg">
+                @if (username.touched && username.errors) {
+                  <div class="error-msg">
+                    @if (username.errors['required']) { <span>username is required.</span> }
+                    @if (username.errors['minlength']) { <span>Must be of 5 Character.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+            
+            <div class="field-set">
+              <ion-label>Password</ion-label>
+              <ion-item class="textFeild" lines="none">
+                <ion-icon slot="start" name="lock-closed"></ion-icon>
+                <ion-input name="password" #password="ngModel"  placeholder="Enter your password" [(ngModel)]="register.password" required minlength="8"></ion-input>
+              </ion-item>
+              <div class="msg">
+                @if (password.touched && password.errors) {
+                  <div class="error-msg">
+                    @if (password.errors['required']) { <span>password is required.</span> }
+                    @if (password.errors['minlength']) { <span>Must be of 8 Character.</span> }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <ion-button type="submit" class="subtn" shape="round" fill="clear" [disabled]="registerForm.invalid">Create Account</ion-button>
+          </div>
+        </div>
+        <p class="signup-prompt">
+          Already a Member 
+          <span>
+            <a (click)="toggleAuthMode()" style="cursor: pointer;">Log In</a>
+          </span>
+        </p>
+      </form>
+      
+    </div>
+  </div>
+</ion-content>

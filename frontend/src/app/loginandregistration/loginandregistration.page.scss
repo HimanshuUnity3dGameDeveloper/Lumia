@@ -1,0 +1,152 @@
+:root{--primary-gradient: linear-gradient(135deg, #8e2de2, #4a00e0); --bg-dark: #0a192f;--card-bg: #112240;--neon-cyan: #64ffda;--text-main: #ccd6f6;--cyber-neon: #64ffda;--cyber-pink: #f57dff;--cyber-dark: #0a192f;--cyber-surface: #112240;}
+
+ion-content{
+    --background: radial-gradient(circle at top, #726086 0%, #0c0c18 100%);
+  --color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+
+ion-label{
+    font-size: 18px;
+    font-weight: 150;
+    line-height: 1.8rem;
+}
+
+ion-item{
+    width: 100%; 
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+ion-button{
+    width: 100%;
+    background: linear-gradient(90deg, #c3bbfd 0%, #f7b3df 100%);
+    border-radius: 18px;
+    color: #2b0b54;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    height: 48px;
+    cursor: pointer;
+}
+
+ion-button:hover{
+    background: linear-gradient(90deg, #bbc5fd 0%, #9786e2 100%);   
+    color: white;
+}
+
+ion-icon{
+    display: inline-block;
+    font-size: 24px;       /* Ionic icons scale using font-size */
+    width: 20px;
+    height: 20px;
+
+    /* 2. Set an explicit color (prevents transparent/white-on-white text) */
+    color: #b5bdc9;        /* Dark gray */
+
+    /* 3. Bring to front if behind input background */
+    position: relative;
+    z-index: 10;
+    
+    /* 4. Prevent touch block on non-clickable icons */
+    pointer-events: none;
+}
+
+.container{
+    display: grid;
+    place-items: center;
+    width: 100%;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.auth-container{
+    width: 90%;
+}
+
+form{    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.027);
+    border-radius: 18px;
+    padding: 15px 0;
+}
+
+.content{
+    width: 85%;
+}
+
+.field-set{
+    margin-bottom: 15px;
+}
+
+.logoTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 18px 0;
+}
+
+.logoTitle h2{
+    margin: 0;
+    padding:10px 0;
+}
+
+.error-msg{
+    text-align: left;
+    color: red;
+}
+
+.continue-with{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.signup-prompt{
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.signup-prompt span{
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.FB-Phone{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+.fb{
+    background: #2a76e7;
+    color: white;
+}
+
+.phone{
+    background: gray;
+    color: white;
+}
+
+.msg{
+    font-size: 15px;
+    font-weight: 800;
+    color: red;
+}
