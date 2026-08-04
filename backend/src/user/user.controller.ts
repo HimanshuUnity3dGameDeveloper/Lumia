@@ -1,0 +1,64 @@
+import { BadRequestException, Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { UserService } from './user.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { extname } from 'path';
+import { diskStorage } from 'multer';
+
+@Controller('user')
+export class UserController {
+
+    constructor(
+        private readonly userService: UserService
+    ) {}
+
+    @Get(':id')
+    async getUser(@Param('id') id: string){
+        return await this.userService.getUser(id);
+    }
+
+    @Post('register')
+    async registerUser(@Body() request: any){
+        return await this.userService.createUser(request);
+    }
+
+    @Post('login')
+    async loginUser(@Body() body:{identity: string, password: string}){
+        return await this.userService.findUserByIdentityAndPassword(body.identity, body.password);
+    }
+
+    
+    @Post(':id/avatar')
+    @UseInterceptors(FileInterceptor('avatar', {
+        storage: diskStorage({
+            destination: './uploads/avatars', filename: (req, file, callback) => { 
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9); 
+                const ext = extname(file.originalname); 
+                callback(null, `avatar-${uniqueSuffix}${ext}`);
+            },
+        }), fileFilter: (req, file, callback) => {
+            if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
+                return callback(
+                    new BadRequestException('Only image files (jpg, jpeg, png, webp) are allowed!'),
+                    false,
+                );
+            } callback(null, true);
+        }, limits: {
+            fileSize: 5 * 1024 * 1024, // 5MB limit
+            },
+        }),
+    )
+    async uploadAvatar(@Param('id') userId: string, @UploadedFile() file: any,) {
+        if (!file) {
+            throw new BadRequestException('Please provide an image file');
+        }
+
+        const imageRelativePath = `/uploads/avatars/${file.filename}`;
+        const updatedUser = await this.userService.updateAvatar(userId, imageRelativePath);
+
+        return {
+        message: 'Profile picture updated successfully',
+        avatarUrl: updatedUser.avatarUrl,
+        user: updatedUser,
+        };
+    }
+}
