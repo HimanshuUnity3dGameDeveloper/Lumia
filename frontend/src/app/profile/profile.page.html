@@ -32,6 +32,7 @@
           <ion-img [src]="getUserAvatar()" alt="User"></ion-img>
         </ion-avatar>
       </div>
+
       <div class="profile-content">
         <p>{{user?.fullname}}</p>
         <div class="follow-list">
@@ -52,7 +53,14 @@
     </div>
 
     <div class="profileBio">
-      <ion-button (click)="updatePost()">
+      <p>💡 chasing moments & light
+        📍 [Your City]
+        📸 lumia/him022
+        capturing reality, one frame at a time. ✨
+        📩 contact / collab: Him@gmail.com
+        🔗 [your-website-or-portfolio-link]
+      </p>
+      <!-- <ion-button (click)="updatePost()">
         Update Post
       </ion-button>
       
@@ -62,28 +70,110 @@
       
       <ion-button (click)="followingBtn()">
         Update Following
-      </ion-button>
+      </ion-button> -->
+    </div>
+
+    <div class="profile-buttons">
+      <ion-button shape="round" fill="clear" (click)="editProfile()">Edit Profile</ion-button>
+      <ion-button shape="round" fill="clear">Share Profile</ion-button>
+    </div>
+
+    <div class="user-content">
+      <div class="header-bar">
+        <ion-segment [(ngModel)]="activeTab" mode="md" class="profile-tabs">
+          <ion-segment-button value="reels">
+            <ion-icon [name]="activeTab === 'reels' ? 'grid' : 'grid-outline'"></ion-icon>
+          </ion-segment-button>
+
+          <ion-segment-button value="drafts">
+            <ion-icon [name]="activeTab === 'drafts' ? 'musical-notes' : 'musical-notes-outline'"></ion-icon>
+          </ion-segment-button>
+
+          <ion-segment-button value="replays">
+            <ion-icon [name]="activeTab === 'replays' ? 'sync' : 'sync-outline'"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <div [ngSwitch]="activeTab" class="files">
+
+        <div *ngSwitchCase="'reels'" class="grid-main">
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'drafts'" class="grid-main">
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'replays'" class="grid-main">
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+          <div class="grid-box">
+            <ion-img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80"></ion-img>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <ion-tabs>
-    <ion-tab-bar>
-      <ion-tab-button>
-          <ion-icon name="home-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button>
-          <ion-icon name="musical-notes-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button>
-          <ion-icon name="paper-plane-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button>
-          <ion-icon name="search-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button>
-          <ion-avatar class="person">
-            <ion-img [src]="getUserAvatar()" alt="User Avatar"></ion-img>
-          </ion-avatar>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
 </ion-content>
+<!-- FIXED FOOTER -->
+<ion-footer class="custom-footer">
+  <ion-toolbar>
+    <div class="footer-button-container">
+      <ion-tab-bar>
+        <ion-tab-button>
+            <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button>
+            <ion-icon name="musical-notes-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button>
+            <ion-icon name="paper-plane-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button>
+            <ion-icon name="search-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button>
+            <ion-avatar class="person">
+              <ion-img [src]="getUserAvatar()" alt="User Avatar"></ion-img>
+            </ion-avatar>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </div>
+  </ion-toolbar>
+</ion-footer>

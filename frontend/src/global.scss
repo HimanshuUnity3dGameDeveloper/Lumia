@@ -35,3 +35,13 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Prevent inactive/empty router outlets from stealing touch events */
+ion-router-outlet:empty {
+  pointer-events: none !important;
+}
+
+/* Ensure the active content page is interactable */
+ion-router-outlet .ion-page-active {
+  pointer-events: auto !important;
+}

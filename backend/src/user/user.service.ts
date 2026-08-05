@@ -98,4 +98,8 @@ export class UserService {
     async updateFollowing(userId:string, following: number){
         return await this.userModel.findByIdAndUpdate(userId, {followingNumber:following});
     }
+
+    async updateBio(userId: string, bio:string){
+        return await this.userModel.findByIdAndUpdate(userId, {profileBio:bio});
+    }
 }

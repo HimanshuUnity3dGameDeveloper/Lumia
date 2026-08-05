@@ -8,7 +8,8 @@ export const UserSchema = new mongoose.Schema ({
     avatarUrl: { type: String, default: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' },
     postNumber: {type: Number, default: 0},
     followerNumber: {type: Number, default: 0},
-    followingNumber: {type: Number, default: 0}
+    followingNumber: {type: Number, default: 0},
+    profileBio: {type: String, default: null}
 });
 
 export interface User extends mongoose.Document {
@@ -20,4 +21,5 @@ export interface User extends mongoose.Document {
     postNumber: number;
     followerNumber: number;
     followingNumber: number;
+    profileBio: string;
 }

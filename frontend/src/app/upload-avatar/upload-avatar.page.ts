@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './upload-avatar.page.html',
   styleUrls: ['./upload-avatar.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, 
+  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonToolbar, IonButton, IonButtons, 
     IonIcon, IonCol, IonRow, IonText, IonAvatar]
 })
 export class UploadAvatarPage implements OnInit {
@@ -22,6 +22,7 @@ export class UploadAvatarPage implements OnInit {
   selectedFile: File | null = null;
   previewPath: string | null = null;
 
+  bioPortal = {profileBio:''}
   private readonly API_URL = 'http://localhost:3000/user';
 
   constructor(
@@ -113,6 +114,20 @@ export class UploadAvatarPage implements OnInit {
 
     this.router.navigate(['/login']);
 
+  }
+
+  onSubmitHandler(form: any){
+    if(form.valid){
+
+      const payload = {userId: this.userId, profileBio:this.bioPortal.profileBio}
+      this.http.patch<{profileBio: String}>(`${this.API_URL}/user/bio`,payload).subscribe(
+        {
+          next: (response) =>{
+            console.log('success',response);
+          }
+        }
+      )
+    }
   }
 }
 

@@ -94,4 +94,13 @@ export class UserController {
 
         return await this.userService.updateFollowing(body.userId, body.followingNumber);
     }
+
+    @Patch('bio')
+    async updateProfileBio(@Body() body:{userId: string, profileBio: string}){
+        if(!body || body.profileBio === undefined){
+            throw new BadRequestException('Profile Bio must be a valid');
+        }
+
+        return await this.userService.updateBio(body.userId, body.profileBio);
+    }
 }

@@ -3,14 +3,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController } from '@ionic/angular';
-import { IonAvatar, IonButton, IonButtons, IonCol, IonContent, IonHeader, IonIcon, IonImg, 
-  IonRefresher, IonRefresherContent, IonRow, IonTabBar, IonTabButton, IonTabs, IonText, 
-  IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonAvatar, IonButton, IonContent, IonHeader, IonIcon, IonImg, IonRefresher, IonRefresherContent, 
+  IonTabBar, IonTabButton, IonTabs,  IonToolbar, IonFooter, 
+  IonTab,
+  IonItem,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { addIcons } from 'ionicons';
-import { addOutline, chevronForwardOutline, homeOutline, menuOutline, musicalNotesOutline, paperPlaneOutline, 
-  searchOutline } from 'ionicons/icons';
+import { addOutline, chevronForwardOutline, grid, gridOutline, homeOutline, menuOutline, musicalNotes, musicalNotesOutline, paperPlaneOutline, 
+  searchOutline, 
+  sync, 
+  syncOutline} from 'ionicons/icons';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 
 interface UserProfile {
   _id: string;
@@ -28,9 +35,9 @@ interface UserProfile {
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, 
-    IonIcon, IonCol, IonRow, IonText, IonAvatar, IonImg, IonRefresher, IonRefresherContent, IonTabs, 
-    IonTabBar, IonTabButton]
+  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonToolbar, IonButton, IonIcon, IonAvatar, 
+    IonImg, IonRefresher, IonRefresherContent, IonTab, IonTabBar, IonTabButton, IonFooter, IonItem,
+    IonSegment, IonSegmentButton, IonLabel]
 })
 export class ProfilePage implements OnInit {
 
@@ -40,7 +47,13 @@ export class ProfilePage implements OnInit {
   following: number = 0;
 
   isFollowing: boolean = false;
+  isGrid = true;
+  isDraft = false;
+  isReply = false;
+
   user: UserProfile | null = null;
+
+  activeTab: string = 'reels';
 
   private readonly API_URL = 'http://localhost:3000';
 
@@ -49,8 +62,8 @@ export class ProfilePage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private router: Router
   ) { 
-    addIcons({chevronForwardOutline, menuOutline, addOutline ,searchOutline, paperPlaneOutline, 
-      musicalNotesOutline, homeOutline})
+    addIcons({'chevron-down-circle-outline': chevronDownCircleOutline, chevronForwardOutline, menuOutline, addOutline ,searchOutline, paperPlaneOutline, 
+      musicalNotesOutline, musicalNotes, homeOutline, gridOutline, grid, syncOutline, sync})
   
   }
 
@@ -173,4 +186,14 @@ export class ProfilePage implements OnInit {
       this.updateFollowing();
     }
   }
+
+  editProfile(){
+
+  }
+
+  changeTabOnClick(event: any){
+    this.activeTab = event.tab;
+  }
+
+  
 }

@@ -7,13 +7,18 @@ import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
+
 defineCustomElements(window);
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    provideIonicAngular({
+      scrollPadding: false,
+      scrollAssist: false, // Prevents Ionic from auto-scrolling inputs on focus
+    }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(),    
+    provideHttpClient()  
   ],
+  
 });
