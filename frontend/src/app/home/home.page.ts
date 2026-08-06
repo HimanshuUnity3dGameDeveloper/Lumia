@@ -13,9 +13,7 @@ import { Router } from '@angular/router';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonToolbar, IonButton, IonIcon, IonAvatar, 
-    IonImg, IonRefresher, IonRefresherContent, IonTab, IonTabBar, IonTabButton, IonFooter, IonItem,
-    IonSegment, IonSegmentButton, IonLabel],
+  imports: [CommonModule, FormsModule],
 })
 export class HomePage implements OnInit {
   

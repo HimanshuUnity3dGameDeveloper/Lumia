@@ -29,8 +29,7 @@ interface UserProfile {
   styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonContent, IonHeader, IonToolbar, IonButton, IonIcon, IonAvatar, 
-    IonImg, IonRefresher, IonRefresherContent, IonTab, IonTabBar, IonTabButton, IonFooter, IonItem,
-    IonSegment, IonSegmentButton, IonLabel]
+    IonImg, IonRefresher, IonRefresherContent, IonSegment, IonSegmentButton]
 })
 export class ProfilePage implements OnInit {
 

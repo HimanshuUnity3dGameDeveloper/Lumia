@@ -1,6 +1,7 @@
 <ion-app>
   <ion-content></ion-content>
-  <ion-footer class="custom-footer">
+  <ion-router-outlet></ion-router-outlet>
+  <ion-footer class="custom-footer" *ngIf="showTabs">
     <ion-toolbar>
       <div class="footer-button-container">
         <ion-tab-bar mode="md" slot="bottom">
@@ -25,5 +26,4 @@
       </div>
     </ion-toolbar>
   </ion-footer>
-  <ion-router-outlet></ion-router-outlet>
 </ion-app>

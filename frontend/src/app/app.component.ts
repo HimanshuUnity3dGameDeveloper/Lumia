@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { IonAvatar,IonRouterOutlet, IonApp, IonContent, IonIcon, IonImg, IonTabBar, IonTabButton, IonToolbar, 
   IonFooter} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -25,7 +26,13 @@ export class AppComponent implements OnInit {
 
   private readonly API_URL = 'http://localhost:3000';
   
-  activeTab: string = '';
+  activeTab: string = 'home';
+
+  // Use to hide the tab fom given routes and also provide delay...
+  showTabs = true;
+  hiddenTabRoutes: string[] = ['/login', '/register', '/upload-avatar'];
+  private readonly TAB_SHOW_DELAY = 500; 
+  private tabTimeout: any;
 
   constructor(
     private http: HttpClient,
@@ -72,6 +79,8 @@ export class AppComponent implements OnInit {
         },
       }
     );
+
+    this.listenToRouterEvents();  
   }
 
   // 1. GET AVATAR...
@@ -82,5 +91,30 @@ export class AppComponent implements OnInit {
     }
     // Default placeholder fallback
     return 'assets/images/default-avatar.png';
+  }
+
+  listenToRouterEvents() {
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        // Extract base path (e.g., '/login')
+        const currentRoute = event.urlAfterRedirects.split('?')[0];
+        const isHiddenRoute = this.hiddenTabRoutes.includes(currentRoute);
+
+        // Clear any pending timeout to avoid race conditions
+        if (this.tabTimeout) {
+          clearTimeout(this.tabTimeout);
+        }
+
+        if (isHiddenRoute) {
+          // Immediately hide tabs on restricted pages
+          this.showTabs = false;
+        } else {
+          // Delay showing tabs when navigating to allowed pages
+          this.tabTimeout = setTimeout(() => {
+            this.showTabs = true;
+          }, this.TAB_SHOW_DELAY);
+        }
+      });
   }
 }

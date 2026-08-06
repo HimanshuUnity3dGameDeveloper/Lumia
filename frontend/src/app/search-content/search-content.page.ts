@@ -14,9 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './search-content.page.html',
   styleUrls: ['./search-content.page.scss'],
   standalone: true,
-    imports: [CommonModule, FormsModule, IonContent, IonHeader, IonToolbar, IonButton, IonIcon, IonAvatar, 
-      IonImg, IonRefresher, IonRefresherContent, IonTab, IonTabBar, IonTabButton, IonFooter, IonItem,
-      IonSegment, IonSegmentButton, IonLabel],
+    imports: [CommonModule, FormsModule],
 })
 export class SearchContentPage implements OnInit {
   
@@ -24,9 +22,7 @@ export class SearchContentPage implements OnInit {
     
     private router: Router
   ) {
-      addIcons({'chevron-down-circle-outline': chevronDownCircleOutline, chevronForwardOutline, menuOutline, 
-        addOutline , search, searchOutline, paperPlane, paperPlaneOutline, musicalNotesOutline, musicalNotes, 
-        homeOutline, home, gridOutline, grid, syncOutline, sync, playOutline})
+      addIcons({})
     }
 
   ngOnInit() {} 
