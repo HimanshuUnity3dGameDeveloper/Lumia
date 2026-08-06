@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 })
 export class SearchContentPage implements OnInit {
 
-  activeTab: string = 'home';
+  activeTab: string = 'search';
   
   constructor(
     
@@ -37,13 +37,13 @@ export class SearchContentPage implements OnInit {
       case 'home':
         this.router.navigate(['/home']);
         break;
-      case 'profile':
+      case 'reels':
         this.router.navigate(['/reels']);
         break;
-      case 'profile':
+      case 'chat':
         this.router.navigate(['/chat']);
         break;
-      case 'profile':
+      case 'search':
         this.router.navigate(['/search']);
         break;
       case 'profile':
