@@ -27,11 +27,11 @@ export const routes: Routes = [
     loadComponent: () => import('./search-content/search-content.page').then( m => m.SearchContentPage)
   },
   {
-    path: 'chat-box',
+    path: 'chat',
     loadComponent: () => import('./chat-box/chat-box.page').then( m => m.ChatBoxPage)
   },
   {
-    path: 'show-reels',
+    path: 'reels',
     loadComponent: () => import('./show-reels/show-reels.page').then( m => m.ShowReelsPage)
   },
 ];

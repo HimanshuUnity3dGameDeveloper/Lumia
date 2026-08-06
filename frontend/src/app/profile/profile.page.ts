@@ -4,20 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController } from '@ionic/angular';
 import { IonAvatar, IonButton, IonContent, IonHeader, IonIcon, IonImg, IonRefresher, IonRefresherContent, 
-  IonTabBar, IonTabButton, IonTabs,  IonToolbar, IonFooter, 
-  IonTab,
-  IonItem,
-  IonSegment,
-  IonSegmentButton,
+  IonTabBar, IonTabButton, IonTabs,  IonToolbar, IonFooter, IonTab, IonItem, IonSegment, IonSegmentButton,
   IonLabel} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { addIcons } from 'ionicons';
-import { addOutline, chevronForwardOutline, grid, gridOutline, homeOutline, menuOutline, musicalNotes, musicalNotesOutline, paperPlaneOutline, 
-  searchOutline, 
-  sync, 
-  syncOutline} from 'ionicons/icons';
-import { chevronDownCircleOutline } from 'ionicons/icons';
+import { addOutline, chevronDownCircleOutline, chevronForwardOutline, grid, gridOutline, homeOutline, menuOutline, musicalNotes, musicalNotesOutline, paperPlaneOutline, 
+  playOutline, searchOutline, sync, syncOutline} from 'ionicons/icons';
 
 interface UserProfile {
   _id: string;
@@ -63,7 +56,7 @@ export class ProfilePage implements OnInit {
     private router: Router
   ) { 
     addIcons({'chevron-down-circle-outline': chevronDownCircleOutline, chevronForwardOutline, menuOutline, addOutline ,searchOutline, paperPlaneOutline, 
-      musicalNotesOutline, musicalNotes, homeOutline, gridOutline, grid, syncOutline, sync})
+      musicalNotesOutline, musicalNotes, homeOutline, gridOutline, grid, syncOutline, sync, playOutline})
   
   }
 
@@ -191,9 +184,24 @@ export class ProfilePage implements OnInit {
 
   }
 
-  changeTabOnClick(event: any){
-    this.activeTab = event.tab;
-  }
-
-  
+  onChangeMode(tabName: string){
+    this.activeTab = tabName; // Update active tab state
+    switch(tabName){
+      case 'home':
+        this.router.navigate(['/home']);
+        break;
+      case 'reels':
+        this.router.navigate(['/reels']);
+        break;
+      case 'chat':
+        this.router.navigate(['/chat']);
+        break;
+      case 'search':
+        this.router.navigate(['/search']);
+        break;
+      case 'profile':
+        this.router.navigate(['/profile']);
+        break;
+    }
+  }  
 }

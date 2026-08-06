@@ -81,8 +81,8 @@
     <div class="user-content">
       <div class="header-bar">
         <ion-segment [(ngModel)]="activeTab" mode="md" class="profile-tabs">
-          <ion-segment-button value="reels">
-            <ion-icon [name]="activeTab === 'reels' ? 'grid' : 'grid-outline'"></ion-icon>
+          <ion-segment-button value="posts">
+            <ion-icon [name]="activeTab === 'posts' ? 'grid' : 'grid-outline'"></ion-icon>
           </ion-segment-button>
 
           <ion-segment-button value="drafts">
@@ -97,45 +97,57 @@
 
       <div [ngSwitch]="activeTab" class="files">
 
-        <div *ngSwitchCase="'reels'" class="grid-main">
+        <div *ngSwitchCase="'posts'" class="grid-main">
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 120</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 12</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 10</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 150</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 250</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 1,290</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 190</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 8</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 80</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="view-count"><ion-icon name="play-outline"></ion-icon> 10</span>
           </div>
         </div>
 
         <div *ngSwitchCase="'drafts'" class="grid-main">
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="draft-badge">Draft</span>
           </div>
           <div class="grid-box">
             <ion-img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"></ion-img>
+            <span class="draft-badge">Draft</span>
           </div>
         </div>
 
@@ -156,19 +168,19 @@
   <ion-toolbar>
     <div class="footer-button-container">
       <ion-tab-bar>
-        <ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('home')">
             <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('reels')">
             <ion-icon name="musical-notes-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('chat')">
             <ion-icon name="paper-plane-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('search')">
             <ion-icon name="search-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('profile')">
             <ion-avatar class="person">
               <ion-img [src]="getUserAvatar()" alt="User Avatar"></ion-img>
             </ion-avatar>

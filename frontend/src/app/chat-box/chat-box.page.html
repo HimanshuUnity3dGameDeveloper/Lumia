@@ -1,13 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>chatBox</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chatBox</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<!-- FIXED FOOTER -->
+<ion-footer class="custom-footer">
+  <ion-toolbar>
+    <div class="footer-button-container">
+      <ion-tab-bar mode="md">
+        <ion-tab-button (click)="onChangeMode('home')" [class.tab-selected]="activeTab === 'home'">
+            <ion-icon [name]="activeTab === 'home' ? 'home' : 'home-outline'"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('reels')" [class.tab-selected]="activeTab === 'reels'">
+            <ion-icon [name]="activeTab === 'reels' ? 'musical-notes' : 'musical-notes-outline'"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('chat')" [class.tab-selected]="activeTab === 'chat'">
+            <ion-icon [name]="activeTab === 'chat' ? 'paper-plane' : 'paper-plane-outline'"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('search')" [class.tab-selected]="activeTab === 'search'">
+            <ion-icon [name]="activeTab === 'search' ? 'search' : 'search-outline'"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button (click)="onChangeMode('profile')" [class.tab-selected]="activeTab === 'profile'">
+            <ion-avatar class="person">
+              <ion-img [src]="" alt="User Avatar"></ion-img>
+            </ion-avatar>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </div>
+  </ion-toolbar>
+</ion-footer>
