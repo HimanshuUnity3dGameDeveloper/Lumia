@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
@@ -17,37 +17,18 @@ import { Router } from '@angular/router';
     IonImg, IonRefresher, IonRefresherContent, IonTab, IonTabBar, IonTabButton, IonFooter, IonItem,
     IonSegment, IonSegmentButton, IonLabel],
 })
-export class HomePage {
-
-  activeTab: string = 'home';
+export class HomePage implements OnInit {
   
-  constructor(
-    
+  constructor(    
     private router: Router
-  ) {
-      addIcons({'chevron-down-circle-outline': chevronDownCircleOutline, chevronForwardOutline, menuOutline, 
-        addOutline , search, searchOutline, paperPlane, paperPlaneOutline, musicalNotesOutline, musicalNotes, 
-        homeOutline, home, gridOutline, grid, syncOutline, sync, playOutline})
-    }
-
-  onChangeMode(tabName: string){
-    this.activeTab = tabName; // Update active tab state
-    switch(tabName){
-      case 'home':
-        this.router.navigate(['/home']);
-        break;
-      case 'reels':
-        this.router.navigate(['/reels']);
-        break;
-      case 'chat':
-        this.router.navigate(['/chat']);
-        break;
-      case 'search':
-        this.router.navigate(['/search']);
-        break;
-      case 'profile':
-        this.router.navigate(['/profile']);
-        break;
-    }
+  ){
+    addIcons({'chevron-down-circle-outline': chevronDownCircleOutline, chevronForwardOutline, menuOutline, 
+      addOutline , search, searchOutline, paperPlane, paperPlaneOutline, musicalNotesOutline, musicalNotes, 
+      homeOutline, home, gridOutline, grid, syncOutline, sync, playOutline}
+    )
   }
+
+  ngOnInit() {
+  } 
 }
+

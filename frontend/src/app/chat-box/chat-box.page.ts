@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
 })
 export class ChatBoxPage implements OnInit {
 
-  activeTab: string = 'chat';
   
   constructor(
     
@@ -31,28 +30,7 @@ export class ChatBoxPage implements OnInit {
         homeOutline, home, gridOutline, grid, syncOutline, sync, playOutline})
     }
 
-  onChangeMode(tabName: string){
-    this.activeTab = tabName; // Update active tab state
-    switch(tabName){
-      case 'home':
-        this.router.navigate(['/home']);
-        break;
-      case 'reels':
-        this.router.navigate(['/reels']);
-        break;
-      case 'chat':
-        this.router.navigate(['/chat']);
-        break;
-      case 'search':
-        this.router.navigate(['/search']);
-        break;
-      case 'profile':
-        this.router.navigate(['/profile']);
-        break;
-    }
-  }
-
   ngOnInit() {
   }
-
 }
+

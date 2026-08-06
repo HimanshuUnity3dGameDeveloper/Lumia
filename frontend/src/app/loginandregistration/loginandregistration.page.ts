@@ -45,7 +45,7 @@ export class LoginandregistrationPage implements OnInit {
         next: (user) => {
           alert(`Welcome back, ${user.username}!`);
           localStorage.setItem('userId', JSON.stringify(user._id));
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           alert('Invalid username and password');

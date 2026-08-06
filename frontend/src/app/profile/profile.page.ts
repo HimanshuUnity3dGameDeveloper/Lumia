@@ -46,7 +46,7 @@ export class ProfilePage implements OnInit {
 
   user: UserProfile | null = null;
 
-  activeTab: string = 'reels';
+  activeTab: string = 'posts';
 
   private readonly API_URL = 'http://localhost:3000';
 
@@ -167,6 +167,7 @@ export class ProfilePage implements OnInit {
     console.log(this.isFollowing);
     this.updateFollowingList();
   }
+
   updateFollowingList()
   {
     if(this.isFollowing){
@@ -182,26 +183,5 @@ export class ProfilePage implements OnInit {
 
   editProfile(){
 
-  }
-
-  onChangeMode(tabName: string){
-    this.activeTab = tabName; // Update active tab state
-    switch(tabName){
-      case 'home':
-        this.router.navigate(['/home']);
-        break;
-      case 'reels':
-        this.router.navigate(['/reels']);
-        break;
-      case 'chat':
-        this.router.navigate(['/chat']);
-        break;
-      case 'search':
-        this.router.navigate(['/search']);
-        break;
-      case 'profile':
-        this.router.navigate(['/profile']);
-        break;
-    }
-  }  
+  } 
 }
